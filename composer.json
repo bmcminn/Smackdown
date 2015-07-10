@@ -14,7 +14,7 @@
     },
     "autoload": {
         "files": [
-          "smackdown.php"
+            "src/smackdown.php"
         ]
     },
     "require": {}
