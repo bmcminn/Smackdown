@@ -1,0 +1,13 @@
+{
+    "name": "gbox/smackdown",
+    "description": "A non-standard Markdown parser for Gbox/Throwdown",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Brandtley McMinn",
+            "email": "labs@gbox.name"
+        }
+    ],
+    "require": {}
+}
