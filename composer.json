@@ -9,5 +9,13 @@
             "email": "labs@gbox.name"
         }
     ],
+    "require": {
+        "php": ">= 5.4.0"
+    },
+    "autoload": {
+        "files": [
+          "smackdown.php"
+        ]
+    },
     "require": {}
 }
