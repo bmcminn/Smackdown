@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f5cdf3ea874009c3a57a95401417b770",
+    "hash": "1de69223e8cefdba3a2d598278ee9bb9",
     "packages": [
         {
             "name": "geekality/timer",

@@ -2,6 +2,7 @@
 
 namespace Gbox;
 
+
 /**
  *
  */
@@ -30,6 +31,10 @@ class Smackdown {
   const BLANK_LINE    = 0;
 
 
+  const MD_HEADER   = '#';
+
+
+
   /**
    * Initializer for new Smackdown instances
    * @param array $overrides Array of overrides
@@ -45,7 +50,7 @@ class Smackdown {
     , 'delimiters' => [
         'code_fence'    => '```'
       , 'code'          => '`'
-      , 'numlist'       => '\.'
+      , 'numlist'       => '\.'   // change this to anything you want to make 1., 1), 1|, etc...
       , 'emphasis'      => '_'
       , 'strong'        => '__'
       , 'attr'          => ','    // when parsing [link](/extras)[they="separate"ATTR_DELIMITERthese="values"]
@@ -67,12 +72,12 @@ class Smackdown {
     , 'blockquote'    => '/^>\s*([\s\S]+?)$/i'
                       // |  > (content here)
     , 'header'        => '/^(\#{1,6})\s*([\s\S]+?)(?:\[([\s\S]+?)\])?$/i'
-                      // |      ######       alphanum  \r\n
-                      // |      (6max)
+                      // |    ######       alphanum  \r\n
+                      // |    (6max)
     , 'list_item'     => '/^(\s*)[-+]\s*([\s\S]+?)$/i'
-                      // |      (-*+)         (alphanum) \r\n
+                      // |       (-*+)         (alphanum) \r\n
     , 'numlist_item'  => '/^(\s*)([a-z\d]+)'.$this->config['delimiters']['numlist'].'\s*([\s\S]+?)$/i'
-                      // |     (ai1.)            (alphanum) \r\n
+                      // |       (ai1.)            (alphanum) \r\n
     , 'rule'          => '/^[-+=_*]{3,}$/i'
                       // |      ---/===/+++/***/___ \r\n
 
@@ -81,7 +86,7 @@ class Smackdown {
     , 'strong'        => '/'.$this->config['delimiters']['strong'].'([\s\S]+?)'.$this->config['delimiters']['strong'].'/i'
     , 'code'          => '/'.$this->config['delimiters']['code'].'([\s\S]+?)'.$this->config['delimiters']['code'].'/i'
                       // | `(codesample)`
-    , 'image'         => '/!\[([\s\S]+?)\]\(([\s\S]+?)\)(?:\[([\s\S]+?)\])?/i'
+    , 'image'         => '/\!\[([\s\S]+?)\]\(([\s\S]+?)\)(?:\[([\s\S]+?)\])?/i'
                       // | ![alt text](src /url)[attributes]
     , 'abbr'          => '/\?\[([\s\S]+?)\]\(([\s\S]+?)\)/i'
                       // | ?[alt text](src /url)[attributes]
@@ -115,8 +120,21 @@ class Smackdown {
    */
   public function render($content) {
 
-    // run the content through our line parser
-    $results = $this->_parseLines($content);
+    // cache original data
+    $results = $content;
+
+    $t = new \Tokenizer($content, \Tokenizer::OFFSET_CAPTURE|\Tokenizer::CASE_SENSITIVE|\Tokenizer::SEARCH_ANYWHERE);
+
+
+    while (list($token) = $t->match($this->regex['header'])) {
+      print_r($token);
+    }
+    echo "\n";
+
+    // if (list($headers) = $t->match("/#{1,6}/i")) {
+    //     echo($headers);
+    // }
+
 
     // Return final render
     return $results;
@@ -132,53 +150,6 @@ class Smackdown {
     $results = file_get_contents($absFilePath);
     return $this->render($results);
   }
-
-
-
-  /**
-   * [_parseLines description]
-   * @param  [type] $lines [description]
-   * @return [type]        [description]
-   */
-  private function _parseLines($content) {
-
-    $results = [];
-
-    // break up results into lines
-    $lines = explode(PHP_EOL, $content);
-
-
-    foreach ($lines as $line => $content) {
-      $chars = preg_split('//', $content, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_OFFSET_CAPTURE);
-      // print_r($chars);
-
-      foreach ($chars as $char => $info) {
-
-        $offset = $info[1];
-        $char   = $info[0];
-
-        // blank line
-        if ($char === "" && $offset === 0) {
-          echo PHP_EOL;
-          continue;
-        }
-
-
-
-        if (preg_match('/'.PHP_EOL.'/', $char)) {
-            # code...
-        } else {
-          echo $char;
-        }
-      }
-
-      $results[] = $chars;
-    }
-
-    return $results;
-  }
-
-
 
 
 }

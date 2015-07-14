@@ -1,5 +1,3 @@
-<?php
-
 # McMinn Land Surveying Co.[id="ajfklsjflsdj",title="sdjfkalsdjfls"]
 
 Since {{ dates.foundingYear }}

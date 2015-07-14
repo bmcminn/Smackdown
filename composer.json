@@ -1,21 +1,22 @@
 {
-    "name": "gbox/smackdown",
-    "description": "A non-standard Markdown parser for Gbox/Throwdown",
-    "license": "MIT",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Brandtley McMinn",
-            "email": "labs@gbox.name"
-        }
-    ],
-    "require": {
-        "php": ">= 5.4.0",
-        "geekality/timer": "^1.2"
-    },
-    "autoload": {
-        "files": [
-            "src/smackdown.php"
-        ]
+  "name": "gbox/smackdown",
+  "description": "A non-standard Markdown parser for Gbox/Throwdown",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Brandtley McMinn",
+      "email": "labs@gbox.name"
     }
+  ],
+  "require": {
+    "php": ">= 5.4.0",
+    "geekality/timer": "^1.2"
+  },
+  "autoload": {
+    "files": [
+      "src/smackdown.php",
+      "src/vendor/php-tokenizer.php"
+    ]
+  }
 }
