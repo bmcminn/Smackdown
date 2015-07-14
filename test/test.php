@@ -4,17 +4,25 @@
 
   require __DIR__.DS."../vendor/autoload.php";
 
-  $smackdown = new \Gbox\Smackdown();
+  Timer::start('root');
+
+
+  use \Gbox\Smackdown as Smackdown;
+
+
+  $smackdown = new Smackdown();
 
   // RUN TEST
   $testfile = file_get_contents(__DIR__.DS.'test.md');
 
-  // file_put_contents(__DIR__.DS.'test-render.json', json_encode($smackdown->render($testfile),JSON_PRETTY_PRINT));
-  // file_put_contents(__DIR__.DS.'test-renderfile.json', json_encode($smackdown->render($testfile),JSON_PRETTY_PRINT));
+
+  Timer::start('render', ['test-render.json']);
+  file_put_contents(__DIR__.DS.'test-render.json', json_encode($smackdown->render($testfile),JSON_PRETTY_PRINT));
+
+  Timer::start('renderFile', ['test-renderFile.json']);
+  file_put_contents(__DIR__.DS.'test-renderfile.json', json_encode($smackdown->render($testfile),JSON_PRETTY_PRINT));
 
   // print_r($smackdown);
 
-
-  print_r(strtok($testfile));
-
-  // http://onlinephpguide.com/php-strtok
+  Timer::stop();
+  echo Timer::result();

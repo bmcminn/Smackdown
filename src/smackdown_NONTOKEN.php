@@ -2,12 +2,6 @@
 
 namespace Gbox;
 
-
-define('T_MD_TAG_START', '<');
-define('T_MD_TAG_CLOSE', '<');
-
-
-
 /**
  *
  */
@@ -51,7 +45,7 @@ class Smackdown {
     , 'delimiters' => [
         'code_fence'    => '```'
       , 'code'          => '`'
-      , 'numlist'       => '\.'   // change this to anything you want to make 1., 1), 1|, etc...
+      , 'numlist'       => '\.'
       , 'emphasis'      => '_'
       , 'strong'        => '__'
       , 'attr'          => ','    // when parsing [link](/extras)[they="separate"ATTR_DELIMITERthese="values"]
@@ -73,12 +67,12 @@ class Smackdown {
     , 'blockquote'    => '/^>\s*([\s\S]+?)$/i'
                       // |  > (content here)
     , 'header'        => '/^(\#{1,6})\s*([\s\S]+?)(?:\[([\s\S]+?)\])?$/i'
-                      // |    ######       alphanum  \r\n
-                      // |    (6max)
+                      // |      ######       alphanum  \r\n
+                      // |      (6max)
     , 'list_item'     => '/^(\s*)[-+]\s*([\s\S]+?)$/i'
-                      // |       (-*+)         (alphanum) \r\n
+                      // |      (-*+)         (alphanum) \r\n
     , 'numlist_item'  => '/^(\s*)([a-z\d]+)'.$this->config['delimiters']['numlist'].'\s*([\s\S]+?)$/i'
-                      // |       (ai1.)            (alphanum) \r\n
+                      // |     (ai1.)            (alphanum) \r\n
     , 'rule'          => '/^[-+=_*]{3,}$/i'
                       // |      ---/===/+++/***/___ \r\n
 
@@ -87,7 +81,7 @@ class Smackdown {
     , 'strong'        => '/'.$this->config['delimiters']['strong'].'([\s\S]+?)'.$this->config['delimiters']['strong'].'/i'
     , 'code'          => '/'.$this->config['delimiters']['code'].'([\s\S]+?)'.$this->config['delimiters']['code'].'/i'
                       // | `(codesample)`
-    , 'image'         => '/\!\[([\s\S]+?)\]\(([\s\S]+?)\)(?:\[([\s\S]+?)\])?/i'
+    , 'image'         => '/!\[([\s\S]+?)\]\(([\s\S]+?)\)(?:\[([\s\S]+?)\])?/i'
                       // | ![alt text](src /url)[attributes]
     , 'abbr'          => '/\?\[([\s\S]+?)\]\(([\s\S]+?)\)/i'
                       // | ?[alt text](src /url)[attributes]
@@ -124,20 +118,12 @@ class Smackdown {
     // lets not muckup the original content
     $results = $content;
 
-    $tokens = token_get_all($results);
+    // break up results into lines
+    $results = explode(PHP_EOL, $results);
 
-    foreach ($tokens as $token) {
-      if (is_string($token)) {
-        // simple 1-character token
-        // echo token_name($token);
-      } else {
-        // token array
-        list($id, $text) = $token;
-        echo token_name($id)."={$text}".PHP_EOL;
-
-      }
-    }
-
+    // run the content through our line parser
+    $results = $this->_parseLines($results);
+    // print_r($results);
     // Return final render
     return $results;
   }
@@ -152,6 +138,149 @@ class Smackdown {
     $results = file_get_contents($absFilePath);
     return $this->render($results);
   }
+
+
+
+  private function _parseLines($lines) {
+    $results = [];
+
+    // iterate over lines to classify them
+    foreach ($lines as $line => $content) {
+
+      $current = [
+        'content' => $content
+      ];
+
+      // bump zero-index value
+      $line += 1;
+
+      if (preg_match($this->regex['blank_line'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'blank_line'
+        , 'weight'  => 1
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['text'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'text'
+        , 'weight'  => 1
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['code_fence'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'code_fence'
+        , 'weight'  => 5
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['header'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'header'
+        , 'weight'  => 5
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['rule'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'rule'
+        , 'weight'  => 5
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['blockquote'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'blockquote'
+        , 'weight'  => 5
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['list_item'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'list_item'
+        , 'weight'  => 5
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['numlist_item'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'numlist_item'
+        , 'weight'  => 5
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['link'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'link'
+        // , 'weight'  => $content
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['abbr'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'abbr'
+        // , 'weight'  => $content
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['strong'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'strong'
+        // , 'weight'  =>
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['em'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'em'
+        // , 'weight'  => 0
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['html_block'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'html_block'
+        , 'weight'  => self::HTML_BLOCK
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['html_inline'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'html_inline'
+        , 'weight'  => self::HTML_INLINE
+        , 'matches' => $matches
+        ];
+      }
+
+      if (preg_match($this->regex['html_comment'], $content, $matches)) {
+        $current['parse'][] = [
+          'type'    => 'html_comment'
+        , 'weight'  => self::HTML_COMMENT
+        , 'matches' => $matches
+        ];
+      }
+      $results[$line][] = $current;
+    }
+
+    return $results;
+
+  }
+
+
 
 
 }

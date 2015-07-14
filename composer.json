@@ -10,12 +10,12 @@
         }
     ],
     "require": {
-        "php": ">= 5.4.0"
+        "php": ">= 5.4.0",
+        "geekality/timer": "^1.2"
     },
     "autoload": {
         "files": [
             "src/smackdown.php"
         ]
-    },
-    "require": {}
+    }
 }

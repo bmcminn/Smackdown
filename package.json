@@ -1,0 +1,30 @@
+{
+  "name": "smackdown",
+  "version": "1.0.0",
+  "description": "version: `0.0.1`",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "php test/test.php"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bmcminn/smackdown"
+  },
+  "keywords": [
+    "markdown",
+    "parser",
+    "php",
+    "parsing",
+    "expression",
+    "grammar"
+  ],
+  "author": "Brandtley McMinn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bmcminn/smackdown/issues"
+  },
+  "homepage": "https://github.com/bmcminn/smackdown"
+}
