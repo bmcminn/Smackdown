@@ -6,3 +6,7 @@ vendor/
 composer.lock
 
 test/*.json
+
+
+# Sublime stuff
+*.sublime-workspace
