@@ -55,13 +55,13 @@ Sample text for <span wafflesfdsd>testing</span>:
     $this->config = array_replace_recursive($this->config, $overrides);
 ```
 
-## {{{url /services/topographic-surveying:Topographic Surveying }}}:
+## Topographic Surveying:
 - Design Surveys
 - Tree Surveys
 - Route Surveys for design
 - Elevation Certificate
 
-## {{{url /services/construction-surveying:Construction Surveying }}}:
+## Construction Surveying:
 - Staking
 - 3rd Party Inspections
 - Forensic Surveying

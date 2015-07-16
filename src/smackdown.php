@@ -274,11 +274,14 @@ class Smackdown {
             // check if we have attributes
             if (isset($matches[3])) {
               $attrs = " {$matches[3]}";
+            } else {
+              $id = strtolower(preg_replace('/\s/', '-', $matches[2]));
+              $id = preg_replace('/[+=:?!]/', '', $id);
+              $attrs = " id=\"{$id}\"";
             }
 
             // construct the header string
             $string = "<h{$hsize}{$attrs}>{$matches[2]}</h{$hsize}>";
-
           }
         }
 
