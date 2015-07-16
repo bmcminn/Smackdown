@@ -703,7 +703,15 @@
 	},
 	"file_history":
 	[
+		"/C/.bin/php56/php.ini",
 		"/C/Users/Brandtley/github/smackdown/test/test.php",
+		"/C/Users/Brandtley/github/smackdown/test/test-renderfile.json",
+		"/C/Users/Brandtley/github/smackdown/test/test.md",
+		"/C/Users/Brandtley/github/smackdown/composer.json",
+		"/C/Users/Brandtley/github/smackdown/test/test-render.json",
+		"/C/Users/Brandtley/github/smackdown/src/smackdown_ORIG.php",
+		"/C/.bin/php5.6/php.ini",
+		"/C/Users/Brandtley/github/smackdown/src/vendor/php.tokenizer.php",
 		"/C/Users/Brandtley/github/smackdown/smackdown.sublime-project",
 		"/C/Users/Brandtley/github/mcminn-surveying/index.php",
 		"/C/Users/Brandtley/github/mcminn-surveying/public/views/page.hbs",
@@ -822,15 +830,7 @@
 		"/Users/brandtley_mcminn/github/mozu-demo-theme/references/core6/templates/modules/common/address-summary.hypr.live",
 		"/Users/brandtley_mcminn/github/mozu-demo-theme/references/core6/scripts/pages/checkout.js",
 		"/Users/brandtley_mcminn/github/mozu-demo-theme/references/core6/scripts/modules/backbone-mozu-model.js",
-		"/Users/brandtley_mcminn/github/mozu-demo-theme/references/core6/scripts/modules/models-checkout.js",
-		"/Users/brandtley_mcminn/github/mozu-demo-theme/references/core6/scripts/modules/models-customer.js",
-		"/Users/brandtley_mcminn/Dropbox/fb-pixel-analytics.js",
-		"/Users/brandtley_mcminn/Dropbox/__clients/__Volusion/google-reselling-script.js",
-		"/Users/brandtley_mcminn/github/fb-pixel-analytics.js.txt",
-		"/Users/brandtley_mcminn/github/fb-pixel-analytics.js",
-		"/Users/brandtley_mcminn/github/fb-pixel-analytics copy.js",
-		"/Users/brandtley_mcminn/github/mystic-refresh/mystic.sublime-project",
-		"/Users/brandtley_mcminn/github/mystic-refresh/configure.js"
+		"/Users/brandtley_mcminn/github/mozu-demo-theme/references/core6/scripts/modules/models-checkout.js"
 	],
 	"find":
 	{
@@ -976,6 +976,23 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"$info[0]",
+			"PHP_EOL",
+			"results",
+			"lines",
+			"results",
+			"Off",
+			"results",
+			"lines",
+			"PREG_SPLIT_NO_EMPTY",
+			"\\n",
+			"str",
+			"PREG_SPLIT_",
+			"Lexer",
+			"next",
+			"Tokenizer",
+			"print_r",
+			"years",
 			"black",
 			"script",
 			"href",
@@ -1086,24 +1103,7 @@
 			"themeSetting",
 			"videoCategory",
 			"themeSettings.product",
-			"templateta",
-			"product",
-			"templatet",
-			"SD_Store",
-			"templates",
-			"tasks",
-			"stylesheets",
-			"scripts",
-			"resources",
-			"references",
-			"labels",
-			"compiled",
-			"admin",
-			"displayProductType",
-			"  var datavalue ",
-			"datavalue",
-			"!=",
-			"new Array()"
+			"templateta"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1187,6 +1187,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"test",
+				"test\\test.php"
+			],
 			[
 				"header",
 				"public\\views\\_header.hbs"
@@ -1694,10 +1698,6 @@
 			[
 				"theme-ui",
 				"theme-ui.json"
-			],
-			[
-				"index",
-				"site/index.php"
 			]
 		],
 		"width": 0.0
